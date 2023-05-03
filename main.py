@@ -14,32 +14,16 @@ redirect_URI = 'http://localhost:8765'
 
 scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative user-library-modify playlist-modify-private playlist-modify-public user-read-recently-played '
 #sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-CACHE = '.spotipyoauthcache'
+#CACHE = '.spotipyoauthcache'
 #client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
 #sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 #results = sp.current_user_saved_tracks()
-sp_oauth = oauth2.SpotifyOAuth(cid, secret,redirect_URI,scope=scope,cache_path=CACHE )
+sp_oauth = oauth2.SpotifyOAuth(cid, secret,redirect_URI,scope=scope)#,cache_path=CACHE )
 sp = spotipy.Spotify(auth_manager=sp_oauth)
 
-
-
 playlists = sp.current_user_playlists()
-print(type(playlists))
-print(len(playlists))
-#print(playlists['items'][0]['name'])
-#print(playlists.keys())
-#print(playlists['items'][0].keys())
-#if playlists != None:
-#    items = playlists['items']
-#    print(len(items))
-#    print(items)
-#    print('Playlists:')
-#    for item in items:
-#        print(f"{item['name']} id {item['id']} num tracks: {item['tracks']['total']}")
 
-
-#playlist = sp.playlist('6wgL1YLtEbGoMgUNLBeBja')
 
 
 @route('/')
@@ -78,7 +62,6 @@ def getSPOauthURI():
     auth_url = sp_oauth.get_authorize_url()
     return auth_url
 
-#run(host='localhost', port=8765)
 st.title("Create today's mix")
 playlists2combine = st.multiselect(
     'Which playlists do you want to hear',
@@ -137,7 +120,7 @@ for item in playlists2combine:
         else:
             print("Skipping ", song['track']['name'])
 #print(todays_songs)
-
+todays_songs=list(set(todays_songs))
 random.shuffle(todays_songs)
 if len(todays_songs)<100:
     todays_songs=todays_songs+filler
