@@ -10,17 +10,17 @@ from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 
 cid = st.secrets["cid"]
 secret = st.secrets["secret"]
-redirect_URI = 'http://localhost:8765'
+redirect_URI = 'https://alyshareinard-spotify-todaysmix-main-j0043u.streamlit.app/'
 
 scope = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative user-library-modify playlist-modify-private playlist-modify-public user-read-recently-played '
 #sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 #CACHE = '.spotipyoauthcache'
-#client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
-#sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
+sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 #results = sp.current_user_saved_tracks()
-sp_oauth = oauth2.SpotifyOAuth(cid, secret,redirect_URI,scope=scope)#,cache_path=CACHE )
-sp = spotipy.Spotify(auth_manager=sp_oauth)
+#sp_oauth = oauth2.SpotifyOAuth(cid, secret,redirect_URI,scope=scope)#,cache_path=CACHE )
+#sp = spotipy.Spotify(auth_manager=sp_oauth)
 
 playlists = sp.current_user_playlists()
 
