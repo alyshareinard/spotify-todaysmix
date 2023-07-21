@@ -5,7 +5,6 @@ import spotipy
 from bottle import route, run, request
 from spotipy import oauth2
 import random
-from flask import Flask
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 
 cid = st.secrets["cid"]
